@@ -1,0 +1,24 @@
+{
+  "name": "trpg-tool",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tokikaze0604/TrpgTool.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tokikaze0604/TrpgTool/issues"
+  },
+  "homepage": "https://github.com/tokikaze0604/TrpgTool#readme",
+  "dependencies": {
+    "ejs": "^2.3.4",
+    "express": "^4.13.3",
+    "socket.io": "^1.3.7"
+  }
+}
