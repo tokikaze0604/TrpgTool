@@ -1,12 +1,13 @@
 "use strict";
 
 exports.onConnection = function (socket) {
-  var express = require('express');
-  var app = express();
-  var http = require('http').Server(app);
-  var io = require('socket.io')(http);
+  socket.emit('chat message', 'a user entered');
+  socket.on('disconnect', function() {
+    socket.emit('chat message', 'a user ecited');
+  });
   socket.on('chat message', function(msg) {
-    io.emit('chat message', 'a' + '> ' + msg);
+    console.log('message: ' + msg);
+    socket.emit('chat message', 'user ' + '> ' + msg);
   });
 
 };
