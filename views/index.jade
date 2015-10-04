@@ -3,10 +3,6 @@ extends layout
 block content
   ul#messages
   form(action="")
-    input#m(autocomplete="off")
+    input#message(autocomplete="off")
     button Send
-  script(type="text/javascript", src="/socket.io/socket.io.js")
-  script(type="text/javascript", src="/js/jquery-2.1.4.min.js")
-  script(type="text/javascript", src="/js/chat.js")
-  script
-    var user = "#{user}";
+  script(src="/js/chat.js")
