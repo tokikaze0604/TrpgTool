@@ -24,7 +24,7 @@ io.on('connection', function(socket){
   });
 });
 
-
+/*
 io.on('connection', function(socket){
   io.emit('chat message', 'a user entered');
   socket.on('disconnect', function() {
@@ -35,10 +35,10 @@ io.on('connection', function(socket){
     io.emit('chat message', msg);
   });
 });
-
+*/
 
 http.listen(3000, function(){
   console.log('listening on *:3000');
 });
 
-//io.sockets.on('connection', serverSockets.onConnection);
+io.sockets.on('connection', serverSockets.onConnection);
