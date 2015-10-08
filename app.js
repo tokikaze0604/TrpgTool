@@ -1,20 +1,59 @@
 "use strict";
 
-var express = require('express');
-var app = express();
-var bodyParser = require('body-parser');
-var http = require('http').Server(app);
-var io = require('socket.io')(http);
-var routes = require('./routes');
-var serverSockets = require('./sockets/server.js');
+/**
+ * Module dependencies
+ */
 
-app.use(express.static(__dirname + '/public'));
+var express        = require('express');
+var app            = express();
+var bodyParser     = require('body-parser');
+var methodOverride = require('method-override');
+var cookieParser   = require('cookie-parser');
+var session        = require('express-session');
+var http           = require('http').Server(app);
+var io             = require('socket.io')(http);
+var routes         = require('./routes');
+var serverSockets  = require('./sockets/server.js');
+var mongoose       = require('mongoose');
+
+/**
+ * Configuratio
+ */
 app.set('views', __dirname + '/views');
 app.set('view engine', 'jade');
+app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
+app.use(methodOverride());
+app.use(cookieParser());
+app.use(session({
+  secret: 'secret',
+  resave: false,
+  saveUninitialized: false,
+  cookie: null
+}));
+
+/**
+ * Routing
+ */
 
 app.get('/',routes.index);
+
+/**
+ * mongoose
+ */
+var schema = mongoose.Schema;
+var userSchema = new schema({
+  message: String,
+  date: Date
+});
+mongoose.model('User', userSchema);
+mongoose.connect('mongodb://localhost/chat_db');
+var user = mongoose.model('User');
+
+/**
+ * functions
+ */
 
 io.on('connection', function(socket){
   console.log('a user connected');
