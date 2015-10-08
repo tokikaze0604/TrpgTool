@@ -1,6 +1,7 @@
 "use strict";
 
 var socket = io();
+
 $('form').submit(function() {
   socket.emit('chat message', $('#message').val());
   $('#message').val('');
@@ -9,4 +10,5 @@ $('form').submit(function() {
 
 socket.on('chat message', function(msg) {
   $('#messages').append($('<li>').text(msg));
+  socket.emit('message send', $('#message').val());
 });

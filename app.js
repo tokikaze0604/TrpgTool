@@ -14,7 +14,7 @@ var http           = require('http').Server(app);
 var io             = require('socket.io')(http);
 var routes         = require('./routes');
 var serverSockets  = require('./sockets/server.js');
-var mongoose       = require('mongoose');
+
 
 /**
  * Configuratio
@@ -38,18 +38,6 @@ app.use(session({
  */
 
 app.get('/',routes.index);
-
-/**
- * mongoose
- */
-var schema = mongoose.Schema;
-var userSchema = new schema({
-  message: String,
-  date: Date
-});
-mongoose.model('User', userSchema);
-mongoose.connect('mongodb://localhost/chat_db');
-var user = mongoose.model('User');
 
 /**
  * functions
