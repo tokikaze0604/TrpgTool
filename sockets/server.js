@@ -10,5 +10,4 @@ exports.onConnection = function (socket) {
     socket.emit('chat message', 'user ' + '> ' + msg);
     socket.broadcast.emit('chat message', 'user ' + '> ' + msg);
   });
-
 };

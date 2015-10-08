@@ -1,6 +1,6 @@
 "use strict";
 
-exports.index = function(req, res){
+exports.index = function(req, res) {
   var params = {
     title: 'TrpgTool'
   }
