@@ -1,14 +1,35 @@
 "use strict";
 
-var socket = io();
+var socket = io.connect();
 
 $('form').submit(function() {
-  socket.emit('chat message', $('#message').val());
+  socket.emit('msg chat', $('#message').val());
   $('#message').val('');
   return false;
 });
 
-socket.on('chat message', function(msg) {
+$('#msgExport').click(function() {
+  console.log("export");
+  socket.emit('msg export');
+});
+
+socket.on('connect', function() {
+  console.log("connect");
+  socket.emit('msg update');
+});
+
+socket.on('msg chat', function(msg) {
   $('#messages').append($('<li>').text(msg));
-  socket.emit('message send', $('#message').val());
+  socket.emit('msg send', msg);
+  console.log("front");
+});
+
+socket.on('msg open', function(msg) {
+  console.log("open");
+  if(msg.length != 0) {
+    $('#messages').empty();
+    $.each(msg, function(key, value) {
+      $('#messages').append($('<li>').text(value.message));
+    });
+  }
 });

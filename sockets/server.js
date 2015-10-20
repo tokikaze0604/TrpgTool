@@ -14,37 +14,38 @@ mongoose.connect('mongodb://localhost/chat_db');
 var user = mongoose.model('User');
 
 exports.onConnection = function (socket) {
-  socket.broadcast.emit('chat message', 'a user entered');
+  socket.broadcast.emit('msg chat', 'a user entered');
   socket.on('disconnect', function() {
-    socket.broadcast.emit('chat message', 'a user exited');
+    socket.broadcast.emit('msg chat', 'a user exited');
   });
-  socket.on('chat message', function(msg) {
+
+  socket.on('msg chat', function(msg) {
     console.log('message: ' + msg);
-    socket.emit('chat message', 'user ' + '> ' + msg);
-    socket.broadcast.emit('chat message', 'user ' + '> ' + msg);
+    socket.emit('msg chat', 'user ' + '> ' + msg);
+    socket.broadcast.emit('msg chat', 'user ' + '> ' + msg);
+    console.log("server");
   });
 
   /**
    * 接続したらDBのメッセージを表示
    */
-   /*
-  socket.on('message update', function() {
+  socket.on('msg update', function() {
+    console.log("update");
     user.find(function(err,docs) {
-      socket.emit('message open', docs);
+      socket.emit('msg open', docs);
     });
   });
-  */
 
   /**
    * メッセージ送信
    */
-  socket.on('massage send', function(msg) {
-    socket.emit('message push', msg);
-    socket.broadcast.emit('message push', msg);
+  socket.on('msg send', function(msg) {
+    console.log("message send");
     //DBに登録
     var pushUser = new user();
     pushUser.message = msg;
     pushUser.date = new Date();
+    console.log(pushUser);
     pushUser.save(function(err) {
       if(err) {
         console.log(err);
@@ -52,6 +53,18 @@ exports.onConnection = function (socket) {
     });
   });
 
+  /**
+   * チャットログをエクスポート
+   */
+  socket.on('msg export', function() {
+    console.log("export");
+    var fs = require('fs');
+    user.find({}, {_id:0, __v:0}, function(err,docs) {
+      fs.writeFile('export.txt', docs, function(err) {
+        console.log(err);
+      });
+    });
+  });
 
   /**
    * DBのメッセージを削除
