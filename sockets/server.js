@@ -23,6 +23,16 @@ exports.onConnection = function (socket) {
     console.log('message: ' + msg);
     socket.emit('msg chat', 'user ' + '> ' + msg);
     socket.broadcast.emit('msg chat', 'user ' + '> ' + msg);
+    // DBに登録
+    var pushUser = new user();
+    pushUser.message = msg;
+    pushUser.date = new Date();
+    console.log(pushUser);
+    pushUser.save(function(err) {
+      if(err) {
+        console.log(err);
+      }
+    });
     console.log("server");
   });
 
@@ -33,23 +43,6 @@ exports.onConnection = function (socket) {
     console.log("update");
     user.find(function(err,docs) {
       socket.emit('msg open', docs);
-    });
-  });
-
-  /**
-   * メッセージ送信
-   */
-  socket.on('msg send', function(msg) {
-    console.log("message send");
-    //DBに登録
-    var pushUser = new user();
-    pushUser.message = msg;
-    pushUser.date = new Date();
-    console.log(pushUser);
-    pushUser.save(function(err) {
-      if(err) {
-        console.log(err);
-      }
     });
   });
 
@@ -69,12 +62,17 @@ exports.onConnection = function (socket) {
   /**
    * DBのメッセージを削除
    */
-   /*
-   socket.on('deleteDB', function() {
+   socket.on('msg delete', function() {
+     console.log("delete");
      socket.emit('db drop');
      socket.broadcast.emit('db drop');
-     user.find().remove();
+     user.remove({}, function(err, result) {
+       if(err) {
+         console.log(err);
+       } else {
+         console.log(result);
+       }
+     });
    });
-   */
 
 };
