@@ -17,7 +17,7 @@ var serverSockets  = require('./sockets/server.js');
 
 
 /**
- * Configuratio
+ * Configuration
  */
 app.set('views', __dirname + '/views');
 app.set('view engine', 'jade');
