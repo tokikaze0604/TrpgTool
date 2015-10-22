@@ -14,16 +14,16 @@ $('form').submit(function() {
     for(var i = dice1; i > 0; i--) {
       dice += Math.floor(Math.random() * (dice2 - 1)) + 1;
     }
+    var diceMsg = "";
     if(msg.match(/\s*[+]\s*\d+/i)) {
       console.log("dice3");
       var dice3 = parseInt(msg.replace(/\d+d\d+\s*[+]\s*/i, ""));
       dice += dice3;
-      msg = dice1 + "d" + dice2  + " + " + dice3 + " = " + dice;
-    } else {
-      msg = dice1 + "d" + dice2  + " = " + dice;
+      diceMsg = " + " + dice3;
     }
-    console.log(msg);
-    socket.emit('msg chat', msg);
+    diceMsg = dice1 + "d" + dice2 + diceMsg + " = " + dice;
+    console.log(diceMsg);
+    socket.emit('msg chat', diceMsg);
     $('#message').val('');
     return false;
   }
