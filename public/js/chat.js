@@ -62,6 +62,6 @@ socket.on('msg open', function(msg) {
   }
 });
 
-socket.on('db drop', function() {
+socket.on('msg drop', function() {
   $('#messages').empty();
 });
