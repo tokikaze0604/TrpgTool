@@ -64,8 +64,8 @@ exports.onConnection = function (socket) {
    */
    socket.on('msg delete', function() {
      console.log("delete");
-     socket.emit('db drop');
-     socket.broadcast.emit('db drop');
+     socket.emit('msg drop');
+     socket.broadcast.emit('msg drop');
      user.remove({}, function(err, result) {
        if(err) {
          console.log(err);
