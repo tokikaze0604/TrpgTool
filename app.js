@@ -10,6 +10,7 @@ var bodyParser     = require('body-parser');
 var methodOverride = require('method-override');
 var cookieParser   = require('cookie-parser');
 var session        = require('express-session');
+var mongoStore     = require('connect-mongo')(session);
 var http           = require('http').Server(app);
 var io             = require('socket.io')(http);
 var routes         = require('./routes');
@@ -28,9 +29,17 @@ app.use(methodOverride());
 app.use(cookieParser());
 app.use(session({
   secret: 'secret',
+  store: new mongoStore ({
+    db: 'session',
+    host: 'localhost',
+    clear_interval: 60 * 60
+  }),
   resave: false,
   saveUninitialized: false,
-  cookie: null
+  cookie: {
+    httpOnly: false,
+    maxAge: new Date(Date.now() + 60 * 60 * 1000)
+  }
 }));
 
 /**
