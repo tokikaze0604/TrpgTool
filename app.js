@@ -56,6 +56,7 @@ app.use(session({
 
 app.get('/', loginCheck, routes.index);
 app.get('/login', routes.login);
+app.post('/add', routes.add);
 app.get('/logout', function(req, res){
   req.session.destroy();
   console.log('deleted sesstion');
