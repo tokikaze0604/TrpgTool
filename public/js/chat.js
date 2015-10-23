@@ -78,6 +78,7 @@ socket.on('msg open', function(msg) {
       $('#messages').append($('<li>').text(value.message));
     });
   }
+  console.log(user);
 });
 
 /**
