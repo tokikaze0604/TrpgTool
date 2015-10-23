@@ -5,13 +5,13 @@
  */
 var mongoose   = require('mongoose');
 var schema     = mongoose.Schema;
-var userSchema = new schema({
+var chatSchema = new schema({
   message: String,
   date: Date
 });
-mongoose.model('User', userSchema);
+mongoose.model('Chat', chatSchema);
 mongoose.connect('mongodb://localhost/chat_db');
-var user = mongoose.model('User');
+var chat = mongoose.model('Chat');
 
 exports.onConnection = function (socket) {
   socket.broadcast.emit('msg chat', 'a user entered');
@@ -24,11 +24,11 @@ exports.onConnection = function (socket) {
     socket.emit('msg chat', 'user ' + '> ' + msg);
     socket.broadcast.emit('msg chat', 'user ' + '> ' + msg);
     // DBに登録
-    var pushUser = new user();
-    pushUser.message = msg;
-    pushUser.date = new Date();
-    console.log(pushUser);
-    pushUser.save(function(err) {
+    var pushMsg = new chat();
+    pushMsg.message = msg;
+    pushMsg.date = new Date();
+    console.log(pushMsg);
+    pushMsg.save(function(err) {
       if(err) {
         console.log(err);
       }
@@ -41,7 +41,7 @@ exports.onConnection = function (socket) {
    */
   socket.on('msg update', function() {
     console.log("update");
-    user.find(function(err,docs) {
+    chat.find(function(err,docs) {
       socket.emit('msg open', docs);
     });
   });
@@ -52,7 +52,7 @@ exports.onConnection = function (socket) {
   socket.on('msg export', function() {
     console.log("export");
     var fs = require('fs');
-    user.find({}, {_id:0, __v:0}, function(err,docs) {
+    chat.find({}, {_id:0, __v:0}, function(err,docs) {
       fs.writeFile('export.txt', docs, function(err) {
         console.log(err);
       });
@@ -66,7 +66,7 @@ exports.onConnection = function (socket) {
      console.log("delete");
      socket.emit('msg drop');
      socket.broadcast.emit('msg drop');
-     user.remove({}, function(err, result) {
+     chat.remove({}, function(err, result) {
        if(err) {
          console.log(err);
        } else {
