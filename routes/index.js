@@ -11,7 +11,7 @@ exports.index = function(req, res) {
   var params = {
     title: 'TrpgTool : Main Page'
   }
-  res.render('index', { user: req.session.user});
+  res.render('index', {title: 'TrpgTool : Main Page', user: req.session.user});
   console.log(req.session.user);
 };
 
@@ -42,7 +42,7 @@ exports.login = function(req, res) {
       console.log(err);
     }
     if(data == ""){
-      res.render('login');
+      res.render('login', params);
     }else{
       req.session.user = userName;
       res.redirect('/');
