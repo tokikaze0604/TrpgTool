@@ -2,6 +2,9 @@
 
 var socket = io.connect();
 
+/**
+ * メッセージ送信
+ */
 $('form').submit(function() {
   var msg = $('#message').val();
   console.log("msg : " + msg);
@@ -32,26 +35,41 @@ $('form').submit(function() {
   return false;
 });
 
+/**
+ * チャットログ出力
+ */
 $('#msgExport').click(function() {
   console.log("export");
   socket.emit('msg export');
 });
 
+/**
+ * チャットログ削除
+ */
 $('#msgDelete').click(function() {
   console.log("delete");
   socket.emit('msg delete');
 });
 
+/**
+ * 接続時にチャットログを確認
+ */
 socket.on('connect', function() {
   console.log("connect");
   socket.emit('msg update');
 });
 
+/**
+ * メッセージ追加
+ */
 socket.on('msg chat', function(msg) {
   $('#messages').append($('<li>').text(msg));
   console.log("front");
 });
 
+/**
+ * チャットログを反映
+ */
 socket.on('msg open', function(msg) {
   console.log("open");
   if(msg.length != 0) {
@@ -62,6 +80,9 @@ socket.on('msg open', function(msg) {
   }
 });
 
+/**
+ * チャットを削除
+ */
 socket.on('msg drop', function() {
   $('#messages').empty();
 });
