@@ -54,7 +54,13 @@ app.use(session({
     }
 };
 
-app.get('/',routes.index);
+app.get('/', loginCheck, routes.index);
+app.get('/login', routes.login);
+app.get('/logout', function(req, res){
+  req.session.destroy();
+  console.log('deleted sesstion');
+  res.redirect('/');
+});
 
 /**
  * functions
