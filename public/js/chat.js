@@ -1,6 +1,8 @@
 "use strict";
 
 var socket = io.connect();
+var user = document.querySelectorAll("#userName")[0].innerHTML;
+console.log("userName: " + user);
 
 /**
  * メッセージ送信
