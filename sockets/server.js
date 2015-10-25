@@ -20,9 +20,10 @@ exports.onConnection = function (socket) {
   });
 
   socket.on('msg chat', function(msg) {
-    console.log('message: ' + msg);
-    socket.emit('msg chat', 'user ' + '> ' + msg);
-    socket.broadcast.emit('msg chat', 'user ' + '> ' + msg);
+    console.log(msg);
+    var msg = msg.user + ' > ' + msg.message;
+    socket.emit('msg chat', msg);
+    socket.broadcast.emit('msg chat', msg);
     // DBに登録
     var pushMsg = new chat();
     pushMsg.message = msg;

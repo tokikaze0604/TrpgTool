@@ -8,29 +8,30 @@ console.log("userName: " + user);
  * メッセージ送信
  */
 $('form').submit(function() {
-  var msg = $('#message').val();
-  console.log("msg : " + msg);
+  var msg = {
+    "user": user,
+    "message" : $('#message').val()
+  };
+  console.log(msg);
   //ダイス判定
-  if(msg.match(/\dd\d/i)) {
-    console.log("match")
-    var dice1 = parseInt((msg.replace(/d\d+/i, "")).replace(/\s*[+]\s*\d+/i, ""));
-    var dice2 = parseInt((msg.replace(/\d+d/i, "")).replace(/\s*[+]\s*\d+/i, ""));
+  if(msg.message.match(/\dd\d/i)) {
+    console.log("match");
+    var dice1 = parseInt((msg.message.replace(/d\d+/i, "")).replace(/\s*[+]\s*\d+/i, ""));
+    var dice2 = parseInt((msg.message.replace(/\d+d/i, "")).replace(/\s*[+]\s*\d+/i, ""));
     var dice  = 0;
     for(var i = dice1; i > 0; i--) {
       dice += Math.floor(Math.random() * (dice2 - 1)) + 1;
     }
     var diceMsg = "";
-    if(msg.match(/\s*[+]\s*\d+/i)) {
+    if(msg.message.match(/\s*[+]\s*\d+/i)) {
       console.log("dice3");
-      var dice3 = parseInt(msg.replace(/\d+d\d+\s*[+]\s*/i, ""));
+      var dice3 = parseInt(msg.message.replace(/\d+d\d+\s*[+]\s*/i, ""));
       dice += dice3;
       diceMsg = " + " + dice3;
     }
     diceMsg = dice1 + "d" + dice2 + diceMsg + " = " + dice;
     console.log(diceMsg);
-    socket.emit('msg chat', diceMsg);
-    $('#message').val('');
-    return false;
+    msg.message = diceMsg;
   }
   socket.emit('msg chat', msg);
   $('#message').val('');
