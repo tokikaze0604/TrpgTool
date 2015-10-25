@@ -10,33 +10,36 @@ console.log("userName: " + user);
 $('form').submit(function() {
   var msg = {
     "user": user,
-    "message" : $('#message').val()
+    "message" : diceroll($('#message').val())
   };
   console.log(msg);
-  //ダイス判定
-  if(msg.message.match(/\dd\d/i)) {
-    console.log("match");
-    var dice1 = parseInt((msg.message.replace(/d\d+/i, "")).replace(/\s*[+]\s*\d+/i, ""));
-    var dice2 = parseInt((msg.message.replace(/\d+d/i, "")).replace(/\s*[+]\s*\d+/i, ""));
-    var dice  = 0;
-    for(var i = dice1; i > 0; i--) {
-      dice += Math.floor(Math.random() * (dice2 - 1)) + 1;
-    }
-    var diceMsg = "";
-    if(msg.message.match(/\s*[+]\s*\d+/i)) {
-      console.log("dice3");
-      var dice3 = parseInt(msg.message.replace(/\d+d\d+\s*[+]\s*/i, ""));
-      dice += dice3;
-      diceMsg = " + " + dice3;
-    }
-    diceMsg = dice1 + "d" + dice2 + diceMsg + " = " + dice;
-    console.log(diceMsg);
-    msg.message = diceMsg;
-  }
   socket.emit('msg chat', msg);
   $('#message').val('');
   return false;
 });
+
+/**
+ * ダイス判定
+ */
+function diceroll(msg) {
+  if(msg.match(/\dd\d/i)) {
+    console.log("match");
+    var dice1 = parseInt((msg.replace(/d\d+/i, "")).replace(/\s*[+]\s*\d+/i, ""));
+    var dice2 = parseInt((msg.replace(/\d+d/i, "")).replace(/\s*[+]\s*\d+/i, ""));
+    var dice  = 0;
+    for(var i = dice1; i > 0; i--) {
+      dice += Math.floor(Math.random() * (dice2 - 1)) + 1;
+    }
+    var add = "";
+    if(msg.match(/\s*[+]\s*\d+/i)) {
+      console.log("add");
+      add = parseInt(msg.replace(/\d+d\d+\s*[+]\s*/i, ""));
+      dice += add;
+      add = " + " + add;
+    }
+    return dice1 + "d" + dice2 + add + " = " + dice;
+  }
+}
 
 /**
  * チャットログ出力
