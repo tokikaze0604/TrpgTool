@@ -58,6 +58,14 @@ $('#msgDelete').click(function() {
 });
 
 /**
+ * 資料ウィンドウ表示
+ */
+$('#document').click(function() {
+  console.log("document");
+  window.open("/document","資料", "width=400,height=400,scrollbars=yes");
+});
+
+/**
  * 接続時にチャットログを確認
  */
 socket.on('connect', function() {

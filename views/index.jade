@@ -1,13 +1,14 @@
 extends layout
 
 block content
-  p(id="userName") #{user}
+  p(id='userName') #{user}
   ul#messages
-  form(action="")
-    input#message(autocomplete="off")
+  form(action='')
+    input#message(autocomplete='off')
     button Send
   button(id='msgExport', type='button') Export
   button(id='msgDelete', type='button') Delete
   p
-    a(href="/logout") Logout
-  script(src="/js/chat.js")
+    a(href='/logout') Logout
+  button(id='document') メモ
+  script(src='/js/chat.js')

@@ -63,6 +63,7 @@ app.get('/logout', function(req, res){
   res.redirect('/');
 });
 app.get('/index', routes.index);
+app.get('/document', routes.document);
 
 /**
  * functions
