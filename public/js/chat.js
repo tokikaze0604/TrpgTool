@@ -1,39 +1,45 @@
 "use strict";
 
 var socket = io.connect();
+var user = document.querySelectorAll("#userName")[0].innerHTML;
+console.log("userName: " + user);
 
 /**
  * メッセージ送信
  */
 $('form').submit(function() {
-  var msg = $('#message').val();
-  console.log("msg : " + msg);
-  //ダイス判定
+  var msg = {
+    "user": user,
+    "message" : diceroll($('#message').val())
+  };
+  console.log(msg);
+  socket.emit('msg chat', msg);
+  $('#message').val('');
+  return false;
+});
+
+/**
+ * ダイス判定
+ */
+function diceroll(msg) {
   if(msg.match(/\dd\d/i)) {
-    console.log("match")
+    console.log("match");
     var dice1 = parseInt((msg.replace(/d\d+/i, "")).replace(/\s*[+]\s*\d+/i, ""));
     var dice2 = parseInt((msg.replace(/\d+d/i, "")).replace(/\s*[+]\s*\d+/i, ""));
     var dice  = 0;
     for(var i = dice1; i > 0; i--) {
       dice += Math.floor(Math.random() * (dice2 - 1)) + 1;
     }
-    var diceMsg = "";
+    var add = "";
     if(msg.match(/\s*[+]\s*\d+/i)) {
-      console.log("dice3");
-      var dice3 = parseInt(msg.replace(/\d+d\d+\s*[+]\s*/i, ""));
-      dice += dice3;
-      diceMsg = " + " + dice3;
+      console.log("add");
+      add = parseInt(msg.replace(/\d+d\d+\s*[+]\s*/i, ""));
+      dice += add;
+      add = " + " + add;
     }
-    diceMsg = dice1 + "d" + dice2 + diceMsg + " = " + dice;
-    console.log(diceMsg);
-    socket.emit('msg chat', diceMsg);
-    $('#message').val('');
-    return false;
+    return dice1 + "d" + dice2 + add + " = " + dice;
   }
-  socket.emit('msg chat', msg);
-  $('#message').val('');
-  return false;
-});
+}
 
 /**
  * チャットログ出力
@@ -78,6 +84,7 @@ socket.on('msg open', function(msg) {
       $('#messages').append($('<li>').text(value.message));
     });
   }
+  console.log(user);
 });
 
 /**
