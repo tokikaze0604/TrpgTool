@@ -1,0 +1,35 @@
+#col1 {
+  float: left;
+  margin: auto;
+  width: 80px;
+}
+#col2 {
+  float: left;
+  margin: auto;
+  width: 80px;
+}
+#col3 {
+  float: left;
+  margin: auto;
+  width: 80px;
+}
+#col4 {
+  float: left;
+  margin: auto;
+  width: 100px;
+}
+#main {
+  overflow: hidden;
+}
+.size81 {
+  width: 81px;
+}
+.size162 {
+  width: 162px;
+}
+.status {
+  width: 31px;
+}
+.db {
+  width: 62px;
+}

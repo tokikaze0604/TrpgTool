@@ -55,5 +55,4 @@ exports.document = function(req, res) {
     title: 'TrpgTool : Document Page'
   }
   res.render('document', {title: 'TrpgTool : Document Page'});
-  console.log(req.session.user);
 };

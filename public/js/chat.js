@@ -7,14 +7,14 @@ console.log("userName: " + user);
 /**
  * メッセージ送信
  */
-$('form').submit(function() {
+$("form").submit(function() {
   var msg = {
     "user": user,
-    "message" : diceroll($('#message').val())
+    "message" : diceroll($("#message").val())
   };
   console.log(msg);
-  socket.emit('msg chat', msg);
-  $('#message').val('');
+  socket.emit("msg chat", msg);
+  $("#message").val("");
   return false;
 });
 
@@ -39,57 +39,59 @@ function diceroll(msg) {
     }
     return dice1 + "d" + dice2 + add + " = " + dice;
   }
+  return msg;
 }
 
 /**
  * チャットログ出力
  */
-$('#msgExport').click(function() {
+$("#msgExport").click(function() {
   console.log("export");
-  socket.emit('msg export');
+  socket.emit("msg export");
 });
 
 /**
  * チャットログ削除
  */
-$('#msgDelete').click(function() {
+$("#msgDelete").click(function() {
   console.log("delete");
-  socket.emit('msg delete');
+  socket.emit("msg delete");
 });
 
 /**
  * 資料ウィンドウ表示
  */
-$('#document').click(function() {
+$("#document").click(function() {
   console.log("document");
-  window.open("/document","資料", "width=400,height=400,scrollbars=yes");
+  window.open("/document","資料", "width=600,height=550,scrollbars=yes");
 });
 
 /**
  * 接続時にチャットログを確認
  */
-socket.on('connect', function() {
+socket.on("connect", function() {
   console.log("connect");
-  socket.emit('msg update');
+  socket.emit("msg update");
 });
 
 /**
  * メッセージ追加
  */
-socket.on('msg chat', function(msg) {
-  $('#messages').append($('<li>').text(msg));
+socket.on("msg chat", function(msg) {
+  $("#messages").append($("<li>").text(msg));
   console.log("front");
 });
 
 /**
  * チャットログを反映
  */
-socket.on('msg open', function(msg) {
+socket.on("msg open", function(msg) {
   console.log("open");
   if(msg.length != 0) {
-    $('#messages').empty();
+    $("#messages").empty();
+    console.log(msg);
     $.each(msg, function(key, value) {
-      $('#messages').append($('<li>').text(value.message));
+      $("#messages").append($("<li>").text(value.message));
     });
   }
   console.log(user);
@@ -98,6 +100,6 @@ socket.on('msg open', function(msg) {
 /**
  * チャットを削除
  */
-socket.on('msg drop', function() {
-  $('#messages').empty();
+socket.on("msg drop", function() {
+  $("#messages").empty();
 });
