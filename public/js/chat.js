@@ -67,6 +67,14 @@ $("#document").click(function() {
 });
 
 /**
+ * ログアウト
+ */
+$("#logout").click(function() {
+  console.log("logout");
+  window.location.href = "/logout";
+});
+
+/**
  * 接続時にチャットログを確認
  */
 socket.on("connect", function() {

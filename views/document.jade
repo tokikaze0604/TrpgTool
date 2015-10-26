@@ -1,13 +1,10 @@
 extends layout
 
 block content
+  div(class="dropdown")
   form(name="selectForm")
     select(id="items" name="items" onchange="change(this)")
       option(value="" selected) 新規
   div(id="document")
-    form
-      label memo
-      textarea(id="memo" rows="5" cols="20")
-      button 登録
   script(src="/js/document.js")
   link(rel="stylesheet", href="/css/document.css")
