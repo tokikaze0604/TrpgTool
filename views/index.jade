@@ -6,8 +6,10 @@ block content
   form(action="")
     input#message(autocomplete="off")
     button Send
-  button(id='msgExport', type='button') Export
-  button(id='msgDelete', type='button') Delete
+  button(id="msgExport", type="button") Export
+  button(id="msgDelete", type="button") Delete
   p
     a(href="/logout") Logout
+  button(id="document") メモ
   script(src="/js/chat.js")
+  link(rel="stylesheet", href="/css/style.css")

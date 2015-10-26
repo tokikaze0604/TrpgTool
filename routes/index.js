@@ -49,3 +49,10 @@ exports.login = function(req, res) {
     }
   });
 };
+
+exports.document = function(req, res) {
+  var params = {
+    title: 'TrpgTool : Document Page'
+  }
+  res.render('document', {title: 'TrpgTool : Document Page'});
+};
