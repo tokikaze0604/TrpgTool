@@ -1,15 +1,22 @@
 extends layout
 
 block content
-  p(id="userName") #{user}
-  ul#messages
-  form(action="")
-    input#message(autocomplete="off")
-    button Send
-  button(id="msgExport", type="button") Export
-  button(id="msgDelete", type="button") Delete
-  p
-    a(href="/logout") Logout
-  button(id="document") メモ
+  div(class="container bg rd")
+    div(class="container-fluid bg-info rd")
+      p(class="h5") ユーザ名 : 
+        span(id="userName" class="h5") #{user}
+    div(class="container-fluid bg-link")
+      ul(id="messages")
+    div(class="container btm")
+      div(class="input-group col1")
+        form(action="")
+          input#message(class="form-control" autocomplete="off")
+          span(class="input-group-btn")
+            button(class="btn btn-primary") Send
+      div(class="btn-group col2")
+        button(id="msgExport" class="btn btn-success") Export
+        button(id="msgDelete" class="btn btn-danger") Delete
+        button(id="logout" class="btn btn-warning") Logout
+        button(id="document" class="btn btn-info") メモ
   script(src="/js/chat.js")
   link(rel="stylesheet", href="/css/style.css")

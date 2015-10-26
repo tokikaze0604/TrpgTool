@@ -197,6 +197,8 @@ exports.onConnection = function (socket) {
        }
        deleteDoc.remove();
      });
+     socket.emit('update');
+     socket.broadcast.emit('update');
    });
 
 };
