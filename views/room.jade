@@ -1,0 +1,20 @@
+extends layout
+
+block content
+  div(id="page1")
+    div(class="init")
+      label
+        span(class="title") Room:
+        select(id="room")
+          option(class="roomA") #A
+          option(class="roomB") #B
+          option(class="roomC") #C
+      label
+        span(class="title") Name:
+        input(type="text" value="John" id="name" maxlength="10")
+    button(id="join") Join
+  div(id="page2")
+    ul(id="view" class="list")
+    div(class="masBox")
+      input(type="text" id="message")
+  script(src="/js/room.js")
